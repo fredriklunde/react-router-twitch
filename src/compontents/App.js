@@ -1,6 +1,5 @@
 import React from 'react';
-import { Router, Route, Switch, Redirect } from 'react-router-dom';
-import {connect} from 'react-redux';
+import { Router, Route, Switch } from 'react-router-dom';
 import StreamCreate from './streams/StreamCreate';
 import StreamDelete from './streams/StreamDelete';
 import StreamEdit from './streams/StreamEdit';
@@ -8,21 +7,11 @@ import StreamList from './streams/StreamList';
 import StreamShow from './streams/StreamShow';
 import Header from './Header';
 import history from '../history';
+import SecretRoute from './SecretRoute';
 
-const SecretRoute = ({ component: Component, isSignedIn, ...rest }) => (
-    <Route {...rest} render={(props) => (
-        isSignedIn !== null
-        ? <Component {...props} />
-        : <Redirect to={{
-            pathname: '/',
-            state: { from: props.location }
-          }} />
-    )} />
-  );
 
-  class App extends React.Component {
+class App extends React.Component {
     render(){
-        const isSignedIn = this.props.isSignedIn;
         return(
         <div>
             <Router history={history}>
@@ -30,9 +19,9 @@ const SecretRoute = ({ component: Component, isSignedIn, ...rest }) => (
                     <Header />
                     <Switch>
                         <Route path="/" exact component={StreamList} />
-                        <SecretRoute path="/streams/new" isSignedIn={isSignedIn} exact component={StreamCreate} />
-                        <SecretRoute path="/streams/edit/:id" isSignedIn={isSignedIn} exact component={StreamEdit} />
-                        <SecretRoute path="/streams/delete/:id" isSignedIn={isSignedIn} exact component={StreamDelete} />
+                        <SecretRoute path="/streams/new" exact component={StreamCreate} />
+                        <SecretRoute path="/streams/edit/:id" exact component={StreamEdit} />
+                        <SecretRoute path="/streams/delete/:id" exact component={StreamDelete} />
                         <Route path="/streams/:id" exact component={StreamShow} />  
                     </Switch>
                 </div>
@@ -43,8 +32,4 @@ const SecretRoute = ({ component: Component, isSignedIn, ...rest }) => (
    
 }
 
-const mapStateToProps = (state) => {
-    return { isSignedIn: state.auth.isSignedIn }
-}
-
-export default connect(mapStateToProps)(App);
+export default App;
