@@ -1,3 +1,21 @@
+## About
+This project is similar to twitch, it lets the user create a stream and to watch other streams. You need to have stream urls in order for this to work.
+![](screen.gif)
+
+## To start
+In root run 
+```
+npm install
+npm start
+```
+also, in api folder run
+```
+npm install
+npm start
+```
+both is required to run
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
